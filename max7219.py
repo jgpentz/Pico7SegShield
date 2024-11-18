@@ -37,8 +37,8 @@ class Max7219():
         )
 
     def max7219_write(self, addr: int, data: int) -> int | None:
-        if addr < 0 or addr > 13:
-            raise Exception(f"there are only 14 addresses (zero indexed), got={addr}")
+        if addr < 0 or addr > 15:
+            raise Exception(f"there are only 15 addresses (zero indexed), got={addr}")
         if data > 255:
             raise Exception(f"data is only 8 bits (max value is 255), got={data}")
 
@@ -48,6 +48,9 @@ class Max7219():
         tx_data = 0x0000
         tx_data |= addr << 8
         tx_data |= data
+        tx_data = tx_data.to_bytes(2, 'big')
+        print(tx_data)
+        
 
         # Send the data over SPI``
         try:
